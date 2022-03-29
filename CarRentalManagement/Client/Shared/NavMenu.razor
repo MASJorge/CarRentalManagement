@@ -1,0 +1,75 @@
+﻿<div class="top-row ps-3 navbar navbar-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="">CarRentalManagement</a>
+        <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+</div>
+
+<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
+    <nav class="flex-column">
+
+        @*<LoginDisplay />*@ @*Traigo al menu de navegacion el componente de visualizacion del inicio de sesion, es decir el nav var que no quiero que se vea arriba*@
+        @*Pero de esa manera solo estoy trayendo el navbar y los componentes son diferentes por eso los copio y los pego aca para que sean iguales y comento ese llamado*@
+        
+        <AuthorizeView>
+            <Authorized>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="authentication/profile" Match="NavLinkMatch.All">
+                        <span class="oi oi-person" aria-hidden="true"></span> Hello, @context.User.Identity?.Name!
+                    </NavLink>
+                </div>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="authentication/logout" Match="NavLinkMatch.All">
+                        <span class="oi oi-account-logout" aria-hidden="true"></span> Log out
+                    </NavLink>
+                </div>
+            </Authorized>
+            <NotAuthorized>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="authentication/register" Match="NavLinkMatch.All">
+                        <span class="oi oi-person" aria-hidden="true"></span> Register
+                    </NavLink>
+                </div>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="authentication/login" Match="NavLinkMatch.All">
+                        <span class="oi oi-account-login" aria-hidden="true"></span> Log In
+                    </NavLink>
+                </div>
+            </NotAuthorized>
+        </AuthorizeView>
+
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                <span class="oi oi-home" aria-hidden="true"></span> Home
+            </NavLink>
+        </div> @*Copiamos esta seccion y la llevamos al inicio de sesion logindisplay razor*@
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="counter">
+                <span class="oi oi-plus" aria-hidden="true"></span> Counter
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="fetchdata">
+                <span class="oi oi-list-rich" aria-hidden="true"></span> Fetch data
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="samplepage">
+                <span class="oi oi-pencil" aria-hidden="true"></span> Sample page
+            </NavLink>
+        </div>
+    </nav>
+</div>
+
+@code {
+    private bool collapseNavMenu = true;
+
+    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+    private void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
+}
