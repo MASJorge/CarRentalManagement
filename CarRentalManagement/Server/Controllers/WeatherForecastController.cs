@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CarRentalManagement.Server.Controllers
 {
-    [Authorize]
+   // [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
@@ -21,6 +21,9 @@ namespace CarRentalManagement.Server.Controllers
             _logger = logger;
         }
 
+
+        // Pueden ser GET POST PUT DELETE
+        // GET para leer, POST para crear, PUT para actualizar y DELETE para eliminar
         [HttpGet]
         public IEnumerable<WeatherForecast> Get()
         {
