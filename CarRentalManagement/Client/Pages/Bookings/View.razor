@@ -1,9 +1,18 @@
-﻿@page "/bookings/view/{id:int}"
+﻿@page "/bookings/view/{id:string}"
+@inject HttpClient _client
+@inject NavigationManager _navManager
 
-    <h3>View</h3>
+<h3>View</h3>
 
-    <FormComponent booking="booking" Disabled="true" />
+<FormComponent customer ="customer" Disabled = "true" />
 
-    @code {
+@code {
+    [Parameter] public string id { get; set; }
+    Booking booking = new Booking();
 
+    protected async override Task OnParametersSetAsync()
+    {
+        booking = await _client.GetFromJsonAsync<Booking>($"{Endpoints.BookingsEndpoint}/{id}");
     }
+
+}

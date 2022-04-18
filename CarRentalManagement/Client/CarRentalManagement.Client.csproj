@@ -24,10 +24,6 @@
     <ServiceWorker Include="wwwroot\service-worker.js" PublishedContent="wwwroot\service-worker.published.js" />
   </ItemGroup>
 
-	<ItemGroup>
-		<None Include="Pages\Vehicles\Index.razor" />
-	</ItemGroup>
-
   <ProjectExtensions><VisualStudio><UserProperties properties_4launchsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
 
 </Project>

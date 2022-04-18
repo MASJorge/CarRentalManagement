@@ -1,7 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-#nullable disable
-
 namespace CarRentalManagement.Server.Data.Migrations
 {
     public partial class AddedNameToUser : Migration
@@ -12,15 +10,13 @@ namespace CarRentalManagement.Server.Data.Migrations
                 name: "FirstName",
                 table: "AspNetUsers",
                 type: "nvarchar(max)",
-                nullable: false,
-                defaultValue: "");
+                nullable: true);
 
             migrationBuilder.AddColumn<string>(
                 name: "LastName",
                 table: "AspNetUsers",
                 type: "nvarchar(max)",
-                nullable: false,
-                defaultValue: "");
+                nullable: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

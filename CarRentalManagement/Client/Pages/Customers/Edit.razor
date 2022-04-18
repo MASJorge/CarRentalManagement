@@ -1,10 +1,23 @@
-﻿@page "/customers/edit/{id:int}"
-
+﻿@page "/customers/edit/{id:string}"
+@inject HttpClient _client
+@inject NavigationManager _navmanager
 
 <h3>Edit</h3>
 
-<FormComponent ButtonText="Update" OnValidSubmit="@EditCustomer" customer="customer" />
+<FormComponent ButtonText="Upload" OnValidSubmit="@EditCustomer" customer ="customer" />
 
 @code {
-    
+    [Parameter] public string id { get; set; }
+    Customer customer = new Customer();
+
+    protected async override Task OnParametersSetAsync()
+    {
+        customer = await _client.GetFromJsonAsync<Customer>($"{Endpoints.CustomersEndpoint}/{id}");
+    }
+
+    private async Task EditCustomer()
+    {
+        await _client.PutAsJsonAsync($"{Endpoints.CustomersEndpoint}/{id}", customer);
+        _navmanager.NavigateTo("/customers/");
+    }
 }

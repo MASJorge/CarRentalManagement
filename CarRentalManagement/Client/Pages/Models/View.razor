@@ -1,10 +1,16 @@
-﻿@page "/models/view/{id:int}"
+﻿@page "/models/edit/{id:string}"
+@inject HttpClient _client
+@inject NavigationManager _navManager
 
-
-<h3>View</h3>
-
-<FormComponent model="model" Disabled="true" />
+<FormComponent model="model" Disabled = "true" />
 
 @code {
-    
+    [Parameter] public string id { get; set; }
+    Model model = new Model();
+
+    protected async override Task OnParametersSetAsync()
+    {
+        model = await _client.GetFromJsonAsync<Model>($"{Endpoints.ModelsEndpoint}/{id}");
+    }
+
 }

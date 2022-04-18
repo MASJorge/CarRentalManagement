@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Hosting;
 
 namespace CarRentalManagement.Server.Controllers
 {
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class VehiclesController : ControllerBase
     {
@@ -23,15 +23,14 @@ namespace CarRentalManagement.Server.Controllers
             IHttpContextAccessor httpContextAccessor)
         {
             _unitOfWork = unitOfWork;
-            this._webHostEnvironment = webHostEnvironment;
-            this._httpContextAccessor = httpContextAccessor;
         }
 
         // GET: /Vehicles
         [HttpGet]
         public async Task<IActionResult> GetVehicles()
         {
-            var Vehicles = await _unitOfWork.Vehicles.GetAll();
+            var includes = new List<string> { "Make", "Model", "Colour" };
+            var Vehicles = await _unitOfWork.Vehicles.GetAll(includes: includes);
             return Ok(Vehicles);
         }
 
@@ -39,7 +38,8 @@ namespace CarRentalManagement.Server.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetVehicle(string id)
         {
-            var Vehicle = await _unitOfWork.Vehicles.Get(q => q.Id == id);
+            var includes = new List<string> { "Make", "Model", "Colour", "Bookings" };
+            var Vehicle = await _unitOfWork.Vehicles.Get(q => q.Id == id, includes);
 
             if (Vehicle == null)
             {

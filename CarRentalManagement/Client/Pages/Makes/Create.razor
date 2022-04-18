@@ -1,14 +1,37 @@
 ﻿@page "/makes/create/"
-
+@inject HttpClient _client
+@inject NavigationManager _navManager
 
 <h3 class="card-title">Create New Make</h3>
 <hr />
 <br />
 
-<FormComponent ButtonText="Create Make" make="make"
-               OnValidSubmit="@CreateMake" />
+@*<EditForm Model="@make" OnValidSubmit="CreateMake">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="form-group">
+        <label>Name: </label>
+        <div>
+            <InputText @bind-Value="@make.Name" />
+            <ValidationMessage For="@(() => make.Name)" />
+        </div>
+    </div>
+    <button type="submit" class="btn btn-success btn-block">
+        Create Make
+    </button>
+</EditForm>
+*@
+
+<FormComponent ButtonText="Create Make" OnValidSubmit="@CreateMake" make=make />
 
 @code {
-    
+    Make make = new Make();
+
+    private async Task CreateMake()
+    {
+        await _client.PostAsJsonAsync(Endpoints.MakesEndpoint, make);
+        _navManager.NavigateTo("/makes/");
+    }
 
 }

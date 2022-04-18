@@ -1,10 +1,19 @@
-﻿@page "/makes/view/{id:int}"
-
+﻿@page "/makes/edit/{id:string}" 
+@inject HttpClient _client
+@inject NavigationManager _navManager
 
 <h3>View</h3>
 
-<FormComponent make="make" Disabled="true" />
+<FormComponent make="make" Disabled ="true" />
 
 @code {
-    
+    [Parameter] public string id { get; set; }
+    Make make = new Make();
+
+    protected async override Task OnParametersSetAsync()
+    {
+        make = await _client.GetFromJsonAsync<Make>($"{Endpoints.MakesEndpoint}/{id}");
+    }
+
 }
+

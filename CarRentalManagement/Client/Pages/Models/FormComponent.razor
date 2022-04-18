@@ -1,25 +1,31 @@
 ﻿<EditForm Model="@model" OnValidSubmit="@OnValidSubmit">
     <DataAnnotationsValidator />
     <ValidationSummary />
-    <fieldset disabled="@Disabled">
+
+    <fieldset disabled = "@Disabled">
         <div class="form-group">
-            <label>Name:</label>
+            <label>Name: </label>
             <div>
-                <InputText @bind-Value="@model.Name" class="form-control" />
+                <InputText @bind-Value="@model.Name" />
                 <ValidationMessage For="@(() => model.Name)" />
             </div>
         </div>
     </fieldset>
-        @if (!Disabled)
-        {
-            <button type="submit" class="btn btn-success btn-block">
-                @ButtonText
-            </button>
-        }
-        <BackToList Target="models" />
+    
+    @if (!Disabled)
+    {
+        <button type="submit" class="btn btn-success btn-block">
+            @ButtonText
+        </button>   
+    }
+    
+    <BackToList Target="makes" />
 </EditForm>
 
-
 @code {
-    
+    [Parameter] public bool Disabled { get; set; } = false;
+    [Parameter] public Model model { get; set; }
+    [Parameter] public string ButtonText { get; set; } = "save";
+    [Parameter] public EventCallback OnValidSubmit { get; set; }
+
 }

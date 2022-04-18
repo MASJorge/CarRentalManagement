@@ -1,10 +1,18 @@
-﻿@page "/vehicles/view/{id:int}"
-
+﻿@page "/vehicles/edit/{id:string}"
+@inject HttpClient _client
+@inject NavigationManager _navManager
 
 <h3>View</h3>
 
-<FormComponent vehicle="vehicle" Disabled="true" />
+<FormComponent vehicle="vehicle" Disabled ="true" />
 
 @code {
-    
+    [Parameter] public string id { get; set; }
+    Vehicle vehicle = new Vehicle();
+
+    protected async override Task OnParametersSetAsync()
+    {
+        vehicle = await _client.GetFromJsonAsync<Vehicle>($"{Endpoints.VehiclesEndpoint}/{id}");
+    }
+
 }

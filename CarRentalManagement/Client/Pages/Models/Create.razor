@@ -1,5 +1,6 @@
 ﻿@page "/models/create/"
-
+@inject HttpClient _client
+@inject NavigationManager _navManager
 
 <h3 class="card-title">Create New Model</h3>
 <hr />
@@ -8,6 +9,12 @@
 <FormComponent ButtonText="Create Model" OnValidSubmit="@CreateModel" model="model" />
 
 @code {
-    
+    Model model = new Model();
+    private async Task CreateModel()
+    {
+        await _client.PostAsJsonAsync(Endpoints.ModelsEndpoint, model);
+        _navManager.NavigateTo("/models/");
+    }
 
 }
+
